@@ -9,6 +9,7 @@ const Container = styled.div`
   justify-content: center;
   font-size: 14px;
   font-weight: 500;
+  margin-top: 15px;
 `;
 const Announcement = () => {
   return <Container>Super Deal! Free Shipping on Orders Over $50</Container>;

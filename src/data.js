@@ -2,7 +2,7 @@ export const sliderItems = [
   {
     id: 1,
     image:
-      "https://o.remove.bg/downloads/deb78754-fe17-4270-84d0-1aa8c62a1e26/52230bfef638b026f653af0a1f22c169-removebg-preview.png",
+      "https://i.pinimg.com/564x/fe/60/9d/fe609da59a92b7bb1616607416e0672a.jpg",
     title: "Macbook Pro",
     desc: "Most recent version! Get flat 30% off for new arrivals",
     bg: "f5fafd",
@@ -10,7 +10,7 @@ export const sliderItems = [
   {
     id: 2,
     image:
-      "https://o.remove.bg/downloads/64375e4c-e22c-45a0-80bb-3f62d2f87e60/17f213c5762c2d3ca7d5d69f26dea630-removebg-preview.png",
+      "https://i.pinimg.com/564x/ec/c4/54/ecc454ef5af8c5cf2f835da0144fbbf4.jpg",
     title: "Macbook Air",
     desc: "Most recent version! Get flat 30% off for new arrivals",
     bg: "fcf1ed",
@@ -18,7 +18,7 @@ export const sliderItems = [
   {
     id: 3,
     image:
-      "https://o.remove.bg/downloads/ece813d2-fa8d-401d-9701-3cbc37b41802/37c08cd644e15bad6584f558d77fe829-removebg-preview.png",
+      "https://i.pinimg.com/564x/7a/14/6c/7a146cb058c373815fb97cae55ee557a.jpg",
     title: "Macbook Pro Max",
     desc: "Most recent version! Get flat 30% off for new arrivals",
     bg: "fbf0f4",
