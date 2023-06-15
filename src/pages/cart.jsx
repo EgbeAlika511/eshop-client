@@ -1,10 +1,17 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
+import { Add, Remove } from "@material-ui/icons";
+import { useSelector, useDispatch } from "react-redux";
+// import { getTotal } from "../redux/cartRedux";
 import styled from "styled-components";
 import Announcement from "../components/announcement";
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
-import { Add, Remove } from "@material-ui/icons";
 import { mobile } from "../responsive";
+import { getTotal } from "../helpers";
+import axios from "axios";
+import env from "react-dotenv";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -129,8 +136,58 @@ const Button = styled.button`
   color: white;
   font-weight: 600;
 `;
+// const randomId = new
 
 const Cart = () => {
+  const cart = useSelector((state) => state.cart);
+  // const dispatch = useDispatch(getTotal);
+  // const getT = cart.total;
+
+  const total = getTotal(cart.products);
+
+  // const dispatch = useEffect(() => {
+  //   dispatch(getTotal());
+  // }, [cart, dispatch]);
+
+  // PAYUNIT INTEGRATION
+  const HandlePayment = (total) => {
+    console.log("Log Something!!!!!!");
+    const apiPassword = process.env.REACT_APP_USER_PASSW;
+    const apiUser = process.env.REACT_APP_USER_NAME;
+    const Authorization = btoa(`${apiUser}:${apiPassword}`);
+    const base_url = "https://gateway.payunit.net";
+    const header = {
+      "x-api-key": process.env.REACT_APP_SAND,
+      mode: "test",
+      "Content-Type": "application/json",
+      Authorization: `Basic ${Authorization}`,
+    };
+
+    const data = {
+      total_amount: total,
+      transaction_id: "pu-" + Date.now(),
+      currency: "XAF",
+      return_url: `https://423e-129-0-99-41.ngrok-free.app/success`,
+      notify_url: `https://423e-129-0-99-41.ngrok-free.app/error`,
+      payment_country: "CM",
+    };
+    axios({
+      url: `${base_url}/api/gateway/initialize`,
+      headers: header,
+      data: data,
+      method: "POST",
+    })
+      .then((res) => {
+        const data = res.data;
+        if (data.statusCode === 200) {
+          window.location.href = data.data.transaction_url;
+        }
+      })
+      .catch((err) => {
+        // console.log(err);
+      });
+  };
+
   return (
     <Container>
       <Navbar />
@@ -147,77 +204,59 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            <Product>
-              <ProductDetail>
-                <Image src="https://i.pinimg.com/564x/f5/95/1b/f5951b5564d563e51f53a5cdec268815.jpg" />
-                <Details>
-                  <ProductName>
-                    <b>Product:</b> DELL laptop
-                  </ProductName>
-                  <ProductId>
-                    <b>ID:</b> 4352453453
-                  </ProductId>
-                  <ProductColor color="gray" />
-                  <ProductSize>
-                    <b>Size:</b> M
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Add />
-                  <ProductAmount>2</ProductAmount>
-                  <Remove />
-                </ProductAmountContainer>
-                <ProductPrice>$ 300</ProductPrice>
-              </PriceDetail>
-            </Product>
+            {cart.products.map((product) => (
+              <Product key={product._id}>
+                <ProductDetail>
+                  <Image src={product.img} />
+                  <Details>
+                    <ProductName>
+                      <b>Product:</b> {product.title}
+                    </ProductName>
+                    <ProductId>
+                      <b>ID:</b> {product._id}
+                    </ProductId>
+                    <ProductColor color={product.color} />
+                    <ProductSize>
+                      <b>Size:</b> {product.size}
+                    </ProductSize>
+                  </Details>
+                </ProductDetail>
+                <PriceDetail>
+                  <ProductAmountContainer>
+                    <Add />
+                    <ProductAmount>{product.quantity}</ProductAmount>
+                    <Remove />
+                  </ProductAmountContainer>
+                  <ProductPrice>
+                    {product.price * product.quantity} XAF
+                  </ProductPrice>
+                </PriceDetail>
+              </Product>
+            ))}
             <Hr />
-            <Product>
-              <ProductDetail>
-                <Image src="https://i.pinimg.com/564x/58/1a/c5/581ac5eb9ee184d2fa29e61c5d5246ab.jpg" />
-                <Details>
-                  <ProductName>
-                    <b>Product:</b> LENOVO
-                  </ProductName>
-                  <ProductId>
-                    <b>ID:</b> 56742324
-                  </ProductId>
-                  <ProductColor color="black" />
-                  <ProductSize>
-                    <b>Size:</b> L
-                  </ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Add />
-                  <ProductAmount>2</ProductAmount>
-                  <Remove />
-                </ProductAmountContainer>
-                <ProductPrice>$ 500</ProductPrice>
-              </PriceDetail>
-            </Product>
           </Info>
+
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ 100</SummaryItemPrice>
+              <SummaryItemPrice>{cart.total} XAF</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 6.90</SummaryItemPrice>
+              <SummaryItemPrice>6.90 XAF</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>$ -6.90</SummaryItemPrice>
+              <SummaryItemPrice>-6.90 XAF</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ 100</SummaryItemPrice>
+              <SummaryItemPrice>{total} XAF</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <Button type="submit" onClick={HandlePayment(total)}>
+              CHECKOUT NOW
+            </Button>
           </Summary>
         </Bottom>
       </Wrapper>

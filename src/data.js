@@ -30,18 +30,21 @@ export const categories = [
     image:
       "https://i.pinimg.com/564x/a2/da/39/a2da39bc112304cfba88f56029917140.jpg",
     title: "DELL",
+    cat: "dell",
   },
   {
     id: 2,
     image:
       "https://i.pinimg.com/564x/e0/1b/15/e01b15e49fb2ade52b02e686d64c0618.jpg",
     title: "LENOVO",
+    cat: "lenovo",
   },
   {
     id: 3,
     image:
       "https://i.pinimg.com/564x/55/c1/81/55c181dcd708636feecdd6d5cedfe6ce.jpg",
     title: "ASUS",
+    cat: "asus",
   },
 ];
 

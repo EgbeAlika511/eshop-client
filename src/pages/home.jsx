@@ -6,7 +6,7 @@ import Categories from "../components/categories";
 import Products from "../components/products";
 import Newsletter from "../components/newsletter";
 import Footer from "../components/footer";
-const home = () => {
+const Home = () => {
   return (
     <div>
       <Announcement />
@@ -20,4 +20,4 @@ const home = () => {
   );
 };
 
-export default home;
+export default Home;
