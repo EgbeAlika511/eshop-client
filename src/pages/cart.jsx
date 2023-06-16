@@ -145,10 +145,6 @@ const Cart = () => {
 
   const total = getTotal(cart.products);
 
-  // const dispatch = useEffect(() => {
-  //   dispatch(getTotal());
-  // }, [cart, dispatch]);
-
   // PAYUNIT INTEGRATION
   const HandlePayment = (total) => {
     console.log("Log Something!!!!!!");

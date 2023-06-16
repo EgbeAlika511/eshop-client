@@ -15,6 +15,7 @@ const Products = ({ cat, filters, sort }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const cart = useSelector((state) => state.cart);
+  console.log(cart);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -25,13 +26,13 @@ const Products = ({ cat, filters, sort }) => {
             : "http://localhost:5000/api/products"
         );
         setProducts(res.data);
-        console.log(res.data);
+        console.log(res.data, "...cat");
       } catch (err) {
-        console.log(err);
+        console.log(err, "fetch error");
       }
     };
     getProducts();
-  }, [cat]);
+  }, []);
 
   useEffect(() => {
     cat &&
@@ -42,6 +43,7 @@ const Products = ({ cat, filters, sort }) => {
           )
         )
       );
+    console.log(products, "product...");
   }, [products, cat, filters]);
 
   useEffect(() => {
