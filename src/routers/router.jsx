@@ -8,9 +8,10 @@ import ProductList from "../pages/productList";
 import Cart from "../pages/cart";
 import Successs from "../pages/success";
 import Error from "../pages/error";
+import { useSelector } from "react-redux";
 
 const Router = () => {
-  const user = true;
+  const user = useSelector((state) => state.user.currentUser);
   return (
     <BrowserRouter>
       <Routes>

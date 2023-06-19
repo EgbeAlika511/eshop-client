@@ -12,6 +12,7 @@ import { mobile } from "../responsive";
 import { getTotal } from "../helpers";
 import axios from "axios";
 import env from "react-dotenv";
+import { Link } from "react-router-dom";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -135,6 +136,7 @@ const Button = styled.button`
   background-color: black;
   color: white;
   font-weight: 600;
+  cursor: pointer;
 `;
 // const randomId = new
 
@@ -191,12 +193,14 @@ const Cart = () => {
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
+          <Link to="/">
+            <TopButton>CONTINUE SHOPPING</TopButton>
+          </Link>
           <TopTexts>
             <TopText>Shopping Bag(2)</TopText>
             <TopText>Your Wishlist(0)</TopText>
           </TopTexts>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          {/* <TopButton type="filled">CHECKOUT NOW</TopButton> */}
         </Top>
         <Bottom>
           <Info>
@@ -234,10 +238,10 @@ const Cart = () => {
 
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
-            <SummaryItem>
+            {/* <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
               <SummaryItemPrice>{cart.total} XAF</SummaryItemPrice>
-            </SummaryItem>
+            </SummaryItem> */}
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
               <SummaryItemPrice>6.90 XAF</SummaryItemPrice>
@@ -250,7 +254,7 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>{total} XAF</SummaryItemPrice>
             </SummaryItem>
-            <Button type="submit" onClick={HandlePayment(total)}>
+            <Button type="submit" onClick={() => HandlePayment(total)}>
               CHECKOUT NOW
             </Button>
           </Summary>
